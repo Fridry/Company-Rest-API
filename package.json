@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Eduardo Fridryszewski Souza",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
