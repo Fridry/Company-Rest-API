@@ -32,7 +32,9 @@ class CompanyController {
 
   async update(req, res) {
     try {
-      const company = await Company.findById(req.params.id);
+      const { id } = req.params;
+
+      const company = await Company.findById(id);
 
       if (!company) return res.status(404).json({ error: "Company not found" });
 
@@ -45,13 +47,9 @@ class CompanyController {
           return res.status(400).json({ error: "Email already in use" });
       }
 
-      const updatedCompany = await Company.findOneAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
+      const updatedCompany = await Company.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
 
       return res.status(200).json(updatedCompany);
     } catch (err) {
