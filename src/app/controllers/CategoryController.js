@@ -27,18 +27,16 @@ class CategoryController {
 
   async update(req, res) {
     try {
-      const category = await Category.findById(req.params.id);
+      const { id } = req.params;
+
+      const category = await Category.findById(id);
 
       if (!category)
         return res.status(404).json({ error: "Category not found" });
 
-      const updatedCategory = await Category.findOneAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
+      const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
 
       return res.status(200).json(updatedCategory);
     } catch (err) {

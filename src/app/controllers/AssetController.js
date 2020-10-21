@@ -53,7 +53,9 @@ class AssetController {
     const { responsible, unit, category } = req.body;
 
     try {
-      const asset = await Asset.findById(req.params.id);
+      const { id } = req.params;
+
+      const asset = await Asset.findById(id);
 
       if (!asset) return res.status(404).json({ error: "Asset not found" });
 
@@ -70,13 +72,9 @@ class AssetController {
       if (!CategoryExists)
         return res.status(404).json({ error: "Category not found" });
 
-      const updatedAsset = await Asset.findOneAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
+      const updatedAsset = await Asset.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
 
       return res.status(200).json(updatedAsset);
     } catch (err) {

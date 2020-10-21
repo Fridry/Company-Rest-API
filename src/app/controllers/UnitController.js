@@ -40,7 +40,9 @@ class UnitController {
 
   async update(req, res) {
     try {
-      const unit = await Unit.findById(req.params.id);
+      const { id } = req.params;
+
+      const unit = await Unit.findById(id);
 
       if (!unit) return res.status(404).json({ error: "Unit not found" });
 
@@ -53,7 +55,7 @@ class UnitController {
           return res.status(400).json({ error: "Email already in use" });
       }
 
-      const updatedUnit = await Unit.findOneAndUpdate(req.params.id, req.body, {
+      const updatedUnit = await Unit.findByIdAndUpdate(id, req.body, {
         new: true,
       });
 

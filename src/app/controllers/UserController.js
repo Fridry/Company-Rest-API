@@ -39,7 +39,9 @@ class UserController {
 
   async update(req, res) {
     try {
-      const user = await User.findById(req.params.id);
+      const { id } = req.params;
+
+      const user = await User.findById(id);
 
       if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -52,7 +54,7 @@ class UserController {
           return res.status(400).json({ error: "Email already in use" });
       }
 
-      const updatedUser = await User.findOneAndUpdate(req.params.id, req.body, {
+      const updatedUser = await User.findByIdAndUpdate(id, req.body, {
         new: true,
       });
 
