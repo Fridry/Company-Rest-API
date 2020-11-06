@@ -3,13 +3,29 @@ const Company = require("../models/Company");
 
 class UnitController {
   async index(req, res) {
-    const units = await Unit.find().populate("company");
+    const { company } = req.query;
+
+    let units = [];
+
+    if (company) {
+      units = await Unit.find({ company });
+    } else {
+      units = await Unit.find().populate("company");
+    }
 
     return res.status(200).json(units);
   }
 
   async show(req, res) {
-    const unit = await Unit.findById(req.params.id).populate("company");
+    const { company } = req.query;
+
+    let unit = {};
+
+    if (company) {
+      unit = await Unit.findOne({ _id: req.params.id, company });
+    } else {
+      unit = await Unit.findById(req.params.id).populate("company");
+    }
 
     if (!unit) return res.status(404).json({ error: "Unit not found" });
 
