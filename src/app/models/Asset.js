@@ -42,6 +42,11 @@ const AssetSchema = new mongoose.Schema(
       ref: "Unit",
       required: true,
     },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
