@@ -4,7 +4,11 @@ const Company = require("../models/Company");
 
 class UserController {
   async index(req, res) {
-    const users = await User.find()
+    const { companyId } = req.query;
+
+    const query = companyId ? { company: `${companyId}` } : {};
+
+    const users = await User.find(query)
       .populate({ path: "company", select: ["name"] })
       .populate({ path: "unit", select: ["name"] });
 
