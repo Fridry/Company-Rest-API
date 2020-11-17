@@ -1,15 +1,20 @@
 const User = require("../models/User");
 const Unit = require("../models/Unit");
+const Company = require("../models/Company");
 
 class UserController {
   async index(req, res) {
-    const users = await User.find().populate("unit");
+    const users = await User.find()
+      .populate({ path: "company", select: ["name"] })
+      .populate({ path: "unit", select: ["name"] });
 
     return res.status(200).json(users);
   }
 
   async show(req, res) {
-    const user = await User.findById(req.params.id).populate("unit");
+    const user = await User.findById(req.params.id)
+      .populate({ path: "company", select: ["name"] })
+      .populate({ path: "unit", select: ["name"] });
 
     if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -17,7 +22,7 @@ class UserController {
   }
 
   async store(req, res) {
-    const { email, unit } = req.body;
+    const { email, unit, company } = req.body;
 
     try {
       const emailExists = await User.findOne({ email });
@@ -29,10 +34,16 @@ class UserController {
 
       if (!unitExists) return res.status(404).json({ error: "Unit not found" });
 
+      const companyExists = await Company.findById({ _id: company });
+
+      if (!companyExists)
+        return res.status(404).json({ error: "Company not found" });
+
       const user = await User.create(req.body);
 
       return res.status(201).json(user);
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: "Creation fails", err });
     }
   }

@@ -25,6 +25,11 @@ const UserSchema = new mongoose.Schema(
       ref: "Unit",
       required: true,
     },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+    },
   },
   {
     timestamps: true,
