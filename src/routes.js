@@ -5,6 +5,7 @@ const CompanyController = require("./app/controllers/CompanyController");
 const UnitController = require("./app/controllers/UnitController");
 const AssetController = require("./app/controllers/AssetController");
 const CategoryController = require("./app/controllers/CategoryController");
+const InfoChartController = require("./app/controllers/InfoChartController");
 
 const router = express.Router();
 
@@ -37,5 +38,7 @@ router.get("/category/:id", CategoryController.show);
 router.post("/category", CategoryController.store);
 router.put("/category/:id", CategoryController.update);
 router.delete("/category/:id", CategoryController.delete);
+
+router.get("/chart", InfoChartController.index);
 
 module.exports = router;
