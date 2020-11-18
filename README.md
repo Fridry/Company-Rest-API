@@ -1,6 +1,6 @@
 # Company Rest API
 
-API para gerenciamento de Empresas, Unidades, ativos e usuários.
+API para gerenciamento de Empresas, Unidades, Ativos e Usuários.
 
 Criada utilizando:
 - Node.js;
